@@ -1,0 +1,40 @@
+.App {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  Routes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  Route {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .Route-link {
+    text-decoration: none;
+    color: #337ab7;
+  }
+  
+  .Route-link:hover {
+    color: #23527c;
+  }
+  
+  .Route-link.active {
+    color: #23527c;
+    font-weight: bold;
+  }
