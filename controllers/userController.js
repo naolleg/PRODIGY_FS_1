@@ -15,7 +15,6 @@ const userController = {
         firstName,
         middleName,
         lastName,
-        companyRoleId,
       } = req.body;
 
       // Check all fields
@@ -25,8 +24,7 @@ const userController = {
         !userPhone ||
         !firstName ||
         !middleName ||
-        !lastName ||
-        !companyRoleId
+        !lastName 
       ) {
         return res.status(400).json({
           success: false,
