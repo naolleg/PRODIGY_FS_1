@@ -1,6 +1,6 @@
 import query from "../config/db.js";
 
-import userQuery from "../queries/user.query.js";
+import userQuery from "../queries/userQuery.js";
 
 const userService = {
   insertIntoUsers: async (data) => {

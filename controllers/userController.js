@@ -1,5 +1,5 @@
-import userService from "../services/user.service.js";
-import userUtility from "../utilities/user.utility.js";
+import userService from "../services/userService.js";
+import userUtility from "../utils/userUtils.js";
 import bcrypt from "bcrypt"; // Import bcrypt correctly
 import dotenv from "dotenv";
 dotenv.config();

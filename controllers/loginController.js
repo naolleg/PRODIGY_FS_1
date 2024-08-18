@@ -1,5 +1,5 @@
-import loginService from "../services/login.service.js";
-import userService from "../services/user.service.js";
+import loginService from "../services/loginService.js";
+import userService from "../services/userService.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 const loginController = {

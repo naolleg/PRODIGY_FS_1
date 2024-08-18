@@ -1,5 +1,5 @@
 import query from "../config/db.js";
-import dashboardQuery from "../queries/dashboard.query.js";
+import dashboardQuery from "../queries/adminQuery.js";
 import dotenv from "dotenv";
 dotenv.config();
 
