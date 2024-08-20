@@ -64,7 +64,25 @@ const adminController = {
       console.log(error);
     }
   },
+   getalluser:async (req, res) => {
 
+    const isAllusers = await dashboardService.getalluser();
+    if (!isAllusers) {
+      return res.status(400).json({
+        success: false,
+        message: "Failed to get all user",
+      });
+    }
+
+
+
+
+    return res.status(200).json({
+      success: true,
+      message: "User get all successfully",
+    });
+
+   },
   insertIntoRole: async (req, res) => {
     try {
       const { userId, companyRoleId } = req.body;

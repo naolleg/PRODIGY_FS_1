@@ -10,7 +10,6 @@ const userService = {
         data.firstName,
         data.middleName,
         data.lastName,
-        data.userPhone,
         data.OTP,
       ]);
       return rows;
@@ -24,7 +23,6 @@ const userService = {
     try {
       const rows = await query(userQuery.insertIntoUsersRole, [
         data.userId,
-        data.companyRoleId,
       ]);
       return rows;
     } catch (e) {

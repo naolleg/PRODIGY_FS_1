@@ -11,7 +11,6 @@ const userController = {
       const {
         userEmail,
         userPassword,
-        userPhone,
         firstName,
         middleName,
         lastName,
@@ -21,7 +20,6 @@ const userController = {
       if (
         !userEmail ||
         !userPassword ||
-        !userPhone ||
         !firstName ||
         !middleName ||
         !lastName 
@@ -43,15 +41,6 @@ const userController = {
         });
       }
 
-      // Check if the phone number is related to an account
-      const isPhoneExist = await userService.getUserByPhone(req.body);
-      // // If there is an account related to this phone
-      if (isPhoneExist.length) {
-        return res.status(400).json({
-          success: false,
-          message: "Phone is already used",
-        });
-      }
 
       // validation completed
       // prepare pasword
@@ -76,14 +65,7 @@ const userController = {
       const isUserPasswordAdded = await userService.insertIntoUsersPassword(
         req.body
       );
-      // Insert contact verification data into the contact verification table
-      const isContactVerificationInserted =
-        await userService.insertIntoContactVerification(req.body);
 
-      // Insert user profile data into the contact verification table
-      const isUserProfileInserted = await userService.insertIntoUsersProfile(
-        req.body
-      );
       // Send OTP by email
       userUtility.sendEmail(userEmail, req.body.OTP).then(async () => {
         // Inserting password into the database

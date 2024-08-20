@@ -23,7 +23,8 @@ const corsOptions = {
   app.get("/", (req, res) => {
     res.send("server working");
   });
-  app.use(appRoute);
+  app.use("/api",appRoute);
+  
   app.listen(port, host, () => {
     console.log(`Server is running at http://${host}:${port}`);
   });

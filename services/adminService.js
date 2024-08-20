@@ -14,6 +14,16 @@ const adminService = {
       // return null;
     }
   },
+  getalluser: async (data) => {
+    try {
+      const rows = await query(dashboardQuery.getalluser );
+      return rows;
+    } catch (error) {
+      console.log(error);
+      // return null;
+    }
+  },
+
 
       insertIntoRole: async (data) => {
         try {
