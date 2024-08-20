@@ -10,7 +10,6 @@ const userService = {
         data.firstName,
         data.middleName,
         data.lastName,
-        data.OTP,
       ]);
       return rows;
     } catch (e) {

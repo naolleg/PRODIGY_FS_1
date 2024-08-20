@@ -1,5 +1,5 @@
 import userService from "../services/userService.js";
-import userUtility from "../utils/userUtils.js";
+//import userUtility from "../utils/userUtils.js";
 import bcrypt from "bcrypt"; // Import bcrypt correctly
 import dotenv from "dotenv";
 dotenv.config();
@@ -50,7 +50,7 @@ const userController = {
       req.body.userPassword = bcrypt.hashSync(userPassword, salt);
 
       // Generate OTP
-      req.body.OTP = userUtility.generateDigitOTP();
+      // req.body.OTP = userUtility.generateDigitOTP();
 
       // insetring the data
       const isUserDataInserted = await userService.insertIntoUsers(req.body);
@@ -66,22 +66,21 @@ const userController = {
         req.body
       );
 
-      // Send OTP by email
-      userUtility.sendEmail(userEmail, req.body.OTP).then(async () => {
-        // Inserting password into the database
+      // // Send OTP by email
+      // userUtility.sendEmail(userEmail, req.body.OTP).then(async () => {
+      //   // Inserting password into the database
         if (
           isUserDataInserted &&
           isUserRoleDataInserted &&
-          isUserPasswordAdded &&
-          isContactVerificationInserted &&
-          isUserProfileInserted
+          isUserPasswordAdded
         ) {
           res.status(200).json({
             success: true,
             message: "User created successfully",
           });
-        }
-      });
+      }
+      //}
+    //);
     } catch (error) {
       res.status(500).json({
         success: false,
