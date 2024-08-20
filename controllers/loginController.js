@@ -41,13 +41,12 @@ const loginController = {
         });
       } else {
         // extracting first name and user role
-        const userInfo = await loginService.getUserRoleAndFirstName(req.body);
-        const firstName = userInfo[0].firstName;
-        const userRole = userInfo[0].companyRoleName;
+        const userInfo = await loginService.getUserFirstName(req.body);
+        const firstName = userInfo;
         const userId = req.body.userId;
         // prepare token
         const token = jwt.sign(
-          { userId, userRole, firstName },
+          { userId, firstName },
           process.env.JWT_SECRET,
           {
             // expiresIn: '1h',

@@ -20,9 +20,9 @@ const loginService = {
       return null;
     }
   },
-  getUserRoleAndFirstName:async (data) => {
+  getUserFirstName:async (data) => {
     try {
-      const rows = await query(loginQuery.getUserRoleAndFirstName, [data.userId]);
+      const rows = await query(loginQuery.getUserFirstName, [data.userId]);
       return rows;
     } catch (e) {
       console.log(e);
