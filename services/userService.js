@@ -22,6 +22,7 @@ const userService = {
     try {
       const rows = await query(userQuery.insertIntoUsersRole, [
         data.userId,
+        data.role,
       ]);
       return rows;
     } catch (e) {

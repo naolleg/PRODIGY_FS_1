@@ -5,7 +5,7 @@ export default {
     getUserPasswordByUserId: `SELECT userPassword FROM usersPassword WHERE userId = ?;`,
     insertIntoUsers: `INSERT INTO users (userEmail, firstName, middleName, lastName, createdAt, activeStatus) VALUES (?, ?, ?, ?, NOW(), 1);`,
     insertIntoUsersRole: `INSERT INTO usersRole (userId,role) VALUES (?,?);`,
-    insertIntoUsersPassword: `INSERT INTO usersPassword (userId, userPassword, createdAt) VALUES (?, ?, NOW() );`,
+    insertIntoUsersPassword: `INSERT INTO usersPassword (userId, userPassword, createdDate) VALUES (?, ?, NOW() );`,
   
     updateOTP: `UPDATE users SET OTP = NULL WHERE userId = ?;`,
     updateContactVerificationEmailStatus: `UPDATE contactVerification SET emailStatus = 1 WHERE userId = ?;`,
