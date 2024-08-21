@@ -22,7 +22,7 @@ const Signup = () => {
     // Remove the axios call and error handling for now
     // We'll focus on the UI part only
   };
-
+    
   return (
     <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">
       <div className="max-w-md mx-auto">

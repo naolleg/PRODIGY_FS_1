@@ -5,12 +5,9 @@ import "./App.css";
 import Signup from "./components/signup";
 import Login from "./components/login";
 // import Home from "./component/Home";
-// import ForgetPassword from "./component/ForgetPassword";
-// import Otp from "./component/Otp";
-// import NewPassword from "./component/NewPassword";
-// import Profile from "./component/Profile";
-// import Admin from "./component/Admin";
-// import ProtectedRoute from "./component/ProtectedRoute";
+import ForgotPassword from "./components/forgotpassword";
+ import OTPConfirmation from "./components/otp";
+import NewPassword from "./components/newpassword";
 
 function App() {
   return (
@@ -19,19 +16,11 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/login" element={<Login />} />
-         <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/forgetPassword" element={<ForgetPassword />} />
-          <Route path="/getOtp" element={<Otp />} />
-          <Route path="/newPassword" element={<NewPassword />} />
-          <Route path="/profile" element={<Profile role="admin" />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute role="admin">
-                <Admin />
-              </ProtectedRoute>
-            }
-          />  */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgetPassword" element={<ForgotPassword />} />
+          <Route path="/getOtp" element={<OTPConfirmation />} />
+          <Route path="/newPassword" element={<NewPassword />} 
+          />  
         </Routes>
       </div>
     </Router>
