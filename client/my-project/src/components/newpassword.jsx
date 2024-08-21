@@ -36,7 +36,7 @@ const NewPassword = () => {
 
   return (
     <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto bg-white p-4 rounded shadow-md">
         <h1 className="text-3xl font-bold mb-4">New Password</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -49,7 +49,7 @@ const NewPassword = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
               required
             />
           </div>
@@ -63,7 +63,7 @@ const NewPassword = () => {
               name="confirmPassword"
               value={confirmPassword}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
               required
             />
           </div>
@@ -72,13 +72,13 @@ const NewPassword = () => {
           )}
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
             disabled={loading}
           >
             {loading ? 'Updating...' : 'Update Password'}
           </button>
         </form>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 mt-4">
           Already have an account? <a href="/login">Login</a>
         </p>
       </div>
