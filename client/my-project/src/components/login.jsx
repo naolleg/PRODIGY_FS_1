@@ -21,6 +21,7 @@ const Login = () => {
     axios.post('http://localhost:8888/api/user/login', credentials)
       .then((response) => {
         console.log(response);
+        console.log(token);
         // If the API returns a token, store it in local storage
         const token = response.data.token;
         localStorage.setItem('token', token);
@@ -29,6 +30,8 @@ const Login = () => {
       })
       .catch((error) => {
         console.error(error);
+        
+        
         setError('Invalid email or password');
         setLoading(false);
       });

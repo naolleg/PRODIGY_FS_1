@@ -41,25 +41,26 @@ const loginController = {
         });
       } else {
         // extracting first name and user role
-        const userInfo = await loginService.getUserFirstName(req.body);
-        const firstName = userInfo;
+        const firstname= await loginService.getUserFirstName(req.body);
+        const role = await loginService.getUserRole(req.body);
         const userId = req.body.userId;
         // prepare token
-        const token = jwt.sign(
-          { userId, firstName },
-          process.env.JWT_SECRET,
-          {
-            // expiresIn: '1h',
-          }
-        );
-        console.log(token);
+      //Prepare token
+      const token = jwt.sign(
+        { userId, role, firstname },
+        process.env.JWT_SECRET,
+        {
+          // expiresIn: '1h',
+        }
+      );
+      console.log(token);
 
-        return res.status(200).json({
-          token,
-          success: true,
-          message: "Login successfully",
-        });
-      }
+      return res.status(200).json({
+        token,
+        success: true,
+        message: "Login successfully",
+      });
+    }
     } catch (error) {
       return res.status(500).json({
         success: false,

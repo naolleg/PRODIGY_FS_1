@@ -11,6 +11,15 @@ const loginService = {
       return null;
     }
   },
+  getUserRole: async (data) => {
+    try {
+      const rows = await query(loginQuery.getUserRoleByUserId, [data.userId]);
+      return rows;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
   getUserPasswordByUserId: async (data) => {
     try {
       const rows = await query(loginQuery.getUserPasswordByUserId, [data.userId]);
