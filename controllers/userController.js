@@ -221,37 +221,35 @@ const userController = {
   // Change new password
   newPassword: async (req, res) => {
     try {
-      const { userId, userPassword } = req.body;
-
+      const userId = req.params.id;
+      const { newPassword, confirmPassword } = req.body;
+  console.log(userId);
+  
       // Validate the request values
-      if (!userId || !userPassword) {
-        res.json({
+      if (!userId || !newPassword || !confirmPassword) {
+        return res.json({
           success: false,
           message: "All fields are required",
         });
       }
-      // Compare with previous passwords
-      const isUserPassword = await userService.getUserPasswordByUserId(userId);
-      for (let i = 0; i < isUserPassword.length; i++) {
-        let dbPassword = isUserPassword[i].userPassword;
-        const isMatch = bcrypt.compareSync(userPassword, dbPassword);
-        if (isMatch) {
-          return res.status(500).json({
-            success: false,
-            message: "This password is already used. Please use another",
-          });
-        }
+  
+      // Check if newPassword and confirmPassword match
+      if (newPassword !== confirmPassword) {
+        return res.status(400).json({
+          success: false,
+          message: "New password and confirm password do not match",
+        });
       }
-
+  
       // Password encryption
       let salt = bcrypt.genSaltSync(10); // Specify the number of rounds
-      req.body.userPassword = bcrypt.hashSync(userPassword, salt);
-      //userPassword = req.body.userPassword;
-      const passwordInserted = await userService.insertIntoUsersPassword(
+      const encryptedPassword = bcrypt.hashSync(newPassword, salt);
+  
+      const passwordInserted = await userService.updateUsersPassword(
         userId,
-        userPassword
+        encryptedPassword
       );
-
+  
       if (!passwordInserted) {
         return res.status(404).json({
           success: false,
@@ -270,7 +268,6 @@ const userController = {
       });
     }
   },
-
   // Change password
   changePassword: async (req, res) => {
     try {

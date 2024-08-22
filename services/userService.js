@@ -30,6 +30,19 @@ const userService = {
       return null;
     }
   },
+  updateUsersPassword: async (data) => {
+    try {
+      const rows = query(userQuery.updateUsersPassword, [
+        data.userId,
+        data.userPassword,
+      ]);
+      return rows;
+    } catch (e) {
+      console.log(e);
+      console.error("Error in updateUsersPassword:", error);
+      return null;
+    }
+  },
 
   insertIntoUsersPassword: async (data) => {
     try {

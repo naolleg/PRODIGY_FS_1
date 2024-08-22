@@ -11,25 +11,22 @@ const ForgotPassword = () => {
   const handleInputChange = (event) => {
     event.preventDefault();
     setLoading(true);
-
+    
     const userData = {
       userEmail: credentials.email,
-
     };
-    axios.post('http://localhost:8888/api/user/',
-  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setLoading(true);
-    // Send a request to the server to send a password reset email
-    // For now, let's just simulate a successful response
-    setTimeout(() => {
-      setLoading(false);
-      alert('Password reset email sent successfully!');
-    }, 2000);
+    axios.post('http://localhost:8888/api/user/forget', userData)
+      .then((response) => {
+        setLoading(false);
+        // Redirect to OTP confirmation page
+        window.location.href = '/otp-confirmation';
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error.response.data.error);
+      });
   };
-
   return (
     <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">
       <div className="max-w-md mx-auto bg-white p-4 rounded shadow-md">
