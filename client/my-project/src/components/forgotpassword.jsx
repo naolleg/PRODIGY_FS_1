@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 
 const ForgotPassword = () => {
+  const [credentials, setCredentials] = useState({
+    email: '',
+  });
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (event) => {
-    const { value } = event.target;
-    setEmail(value);
+    event.preventDefault();
+    setLoading(true);
+
+    const userData = {
+      userEmail: credentials.email,
+
+    };
+    axios.post('http://localhost:8888/api/user/',
   };
 
   const handleSubmit = (event) => {

@@ -1,5 +1,5 @@
 import userService from "../services/userService.js";
-//import userUtility from "../utils/userUtils.js";
+import userUtility from "../utils/userUtils.js";
 import bcrypt from "bcrypt"; // Import bcrypt correctly
 import dotenv from "dotenv";
 dotenv.config();
@@ -165,18 +165,18 @@ const userController = {
   forgetPassword: async (req, res) => {
     try {
       const { userEmail } = req.body;
-
+  
       // Validate the request values
       if (!userEmail) {
-        res.json({
+        return res.status(400).json({
           success: false,
           message: "All fields are required",
         });
       }
-
+  
       // Check if the email exists
       const isUserExist = await userService.getUserByEmail(req.body);
-
+  
       // If there is no account related to this email
       if (!isUserExist.length) {
         return res.status(400).json({
@@ -187,12 +187,16 @@ const userController = {
         // Extract userId
         req.body.userId = isUserExist[0].userId;
         // Generate OTP
+        console.log("0");
         const OTP = await userUtility.generateDigitOTP();
         req.body.OTP = OTP;
-        // console.log(req.body.OTP)
+        console.log("1");
+        
+        // Send OTP to user's email
         userUtility.sendEmail(userEmail, OTP).then(async () => {
+          // Store OTP in database
+          console.log("2");
           const isnewOTPAdded = await userService.newOTP(req.body);
-          //console.log(isnewOTPAdded);
           if (!isnewOTPAdded) {
             return res.status(500).json({
               success: false,
@@ -201,7 +205,7 @@ const userController = {
           } else {
             return res.status(200).json({
               success: true,
-              message: "OTP sent successfully",
+              message: "OTP sent successfully. Please check your email.",
             });
           }
         });
@@ -214,7 +218,6 @@ const userController = {
       });
     }
   },
-
   // Change new password
   newPassword: async (req, res) => {
     try {
