@@ -56,6 +56,7 @@ const loginController = {
       console.log(token);
 
       return res.status(200).json({
+        role,
         token,
         success: true,
         message: "Login successfully",

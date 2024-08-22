@@ -18,16 +18,20 @@ const Login = () => {
     event.preventDefault();
     setLoading(true);
 
-    axios.post('http://localhost:8888/api/user/login', credentials)
-      .then((response) => {
-        console.log(response);
-        console.log(token);
-        // If the API returns a token, store it in local storage
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-        // Redirect to the dashboard or home page
-        window.location.href = '/';
-      })
+
+    const userData = {
+      userEmail: credentials.email,
+      userPassword: credentials.password,
+    };
+
+    axios.post('http://localhost:8888/api/user/login', userData)
+    .then((response) => {
+      console.log(response);
+      const token = response.data.token; // declare token variable here
+      console.log(token); // now you can log the token variable
+      localStorage.setItem('token', token);
+      window.location.href = '/';
+    })
       .catch((error) => {
         console.error(error);
         
