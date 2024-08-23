@@ -18,33 +18,31 @@ const Login = () => {
     event.preventDefault();
     setLoading(true);
 
-
     const userData = {
       userEmail: credentials.email,
       userPassword: credentials.password,
     };
 
     axios.post('http://localhost:8888/api/user/login', userData)
-    .then((response) => {
-      console.log(response);
-      const token = response.data.token; // declare token variable here
-      console.log(token); // now you can log the token variable
-      localStorage.setItem('token', token);
-      window.location.href = '/';
-    })
+      .then((response) => {
+        console.log(response);
+        const token = response.data.token;
+        const userProfile = response.data.user; // assume the API returns the user's profile data
+        localStorage.setItem('token', token);
+        localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        window.location.href = '/';
+      })
       .catch((error) => {
         console.error(error);
-        
-        
         setError('Invalid email or password');
         setLoading(false);
       });
   };
 
   return (
-    <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">
-      <div className="max-w-md mx-auto bg-white p-4 rounded shadow-md">
-        <h1 className="text-3xl font-bold mb-4">Login</h1>
+    <div className="h-screen flex justify-center items-center bg-gray-100">
+      <div className="max-w-md w-full p-4 bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold mb-4 text-center">Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-2" htmlFor="email">
@@ -56,7 +54,7 @@ const Login = () => {
               name="email"
               value={credentials.email}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
@@ -70,26 +68,26 @@ const Login = () => {
               name="password"
               value={credentials.password}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
           {error && (
-            <div className="text-red-500 mb-4">{error}</div>
+            <div className="text-red-500 mb-4 text-center">{error}</div>
           )}
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full disabled:opacity-50"
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <p className="text-sm text-gray-600 mt-4">
-          Don't have an account? <a href="/signup">Sign up</a>
+        <p className="text-sm text-gray-600 mt-4 text-center">
+          Don't have an account? <a href="/signup" className="text-blue-500 hover:text-blue-700">Sign up</a>
         </p>
-        <p className="text-sm text-gray-600 mt-2">
-          forgot password? <a href="/forgetpassword">reset password</a>
+        <p className="text-sm text-gray-600 mt-2 text-center">
+          Forgot password? <a href="/forgetpassword" className="text-blue-500 hover:text-blue-700">Reset password</a>
         </p>
       </div>
     </div>

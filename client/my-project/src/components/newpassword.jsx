@@ -35,9 +35,9 @@ const NewPassword = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">
-      <div className="max-w-md mx-auto bg-white p-4 rounded shadow-md">
-        <h1 className="text-3xl font-bold mb-4">New Password</h1>
+    <div className="h-screen flex justify-center items-center bg-white">
+      <div className="max-w-md w-full p-4 bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold mb-4 text-center">New Password</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-2" htmlFor="password">
@@ -49,7 +49,7 @@ const NewPassword = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
@@ -63,7 +63,7 @@ const NewPassword = () => {
               name="confirmPassword"
               value={confirmPassword}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
@@ -72,14 +72,14 @@ const NewPassword = () => {
           )}
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
             disabled={loading}
           >
             {loading ? 'Updating...' : 'Update Password'}
           </button>
         </form>
         <p className="text-sm text-gray-600 mt-4">
-          Already have an account? <a href="/login">Login</a>
+          Already have an account? <a href="/login" className="text-blue-500 hover:text-blue-700">Login</a>
         </p>
       </div>
     </div>

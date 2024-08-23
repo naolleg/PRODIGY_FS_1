@@ -222,34 +222,27 @@ const userController = {
   newPassword: async (req, res) => {
     try {
       const userId = req.params.id;
-      const { newPassword, confirmPassword } = req.body;
-  console.log(userId);
+      const { newPassword } = req.body;
+      console.log(userId);
   
       // Validate the request values
-      if (!userId || !newPassword || !confirmPassword) {
+      if (!userId || !newPassword) {
         return res.json({
           success: false,
           message: "All fields are required",
         });
       }
-  
-      // Check if newPassword and confirmPassword match
-      if (newPassword !== confirmPassword) {
-        return res.status(400).json({
-          success: false,
-          message: "New password and confirm password do not match",
-        });
-      }
+  console.log(newPassword);
   
       // Password encryption
       let salt = bcrypt.genSaltSync(10); // Specify the number of rounds
       const encryptedPassword = bcrypt.hashSync(newPassword, salt);
+  console.log(encryptedPassword);
   
-      const passwordInserted = await userService.updateUsersPassword(
-        userId,
-        encryptedPassword
-      );
-  
+  const passwordInserted = await userService.updateUsersPassword(
+    userId,
+    encryptedPassword
+  );
       if (!passwordInserted) {
         return res.status(404).json({
           success: false,

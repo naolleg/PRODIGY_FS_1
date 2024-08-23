@@ -30,16 +30,16 @@ const userService = {
       return null;
     }
   },
-  updateUsersPassword: async (data) => {
+  updateUsersPassword: async (userId, encryptedPassword) => {
     try {
-      const rows = query(userQuery.updateUsersPassword, [
-        data.userId,
-        data.userPassword,
+      const rows = await query(userQuery.updateUsersPassword, [
+        encryptedPassword,
+        userId,
       ]);
       return rows;
     } catch (e) {
       console.log(e);
-      console.error("Error in updateUsersPassword:", error);
+      console.error("Error in updateUsersPassword:", e);
       return null;
     }
   },

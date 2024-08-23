@@ -19,8 +19,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgetPassword" element={<ForgotPassword />} />
           <Route path="/getOtp" element={<OTPConfirmation />} />
-          <Route path="/newPassword" element={<NewPassword />} 
-          />  
+          <Route path="/newPassword" element={<NewPassword />} />  
+          <Route path="/changePassword" element={<NewPassword />}  />   
+         <Route path="/newPassword" element={<NewPassword />}  />
+          <Route path="/admindashboard" element={ 
+            <ProtectedRoute role="admin">  <Admin />   </ProtectedRoute> }/>
         </Routes>
       </div>
     </Router>

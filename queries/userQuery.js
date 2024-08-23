@@ -9,6 +9,6 @@ export default {
     updateOTP: `UPDATE users SET OTP = NULL WHERE userId = ?;`,
     updateContactVerificationEmailStatus: `UPDATE contactVerification SET emailStatus = 1 WHERE userId = ?;`,
     newOTP: `UPDATE users SET OTP = ? WHERE userEmail = ?;`,
-    updateUsersPassword: `UPDATE usersPassword SET userPassword = ?, createdDate = NOW() WHERE userId = ?;`,
+    updateUsersPassword: `UPDATE usersPassword SET userPassword = ?, createdAt = NOW() WHERE userId = ?;`,
   };
   

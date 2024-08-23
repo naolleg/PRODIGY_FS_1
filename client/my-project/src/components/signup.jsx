@@ -5,7 +5,7 @@ const Signup = () => {
   const [credentials, setCredentials] = useState({
     firstName: '',
     lastName: '',
-    middleName:'',
+    middleName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -31,7 +31,7 @@ const Signup = () => {
     const userData = {
       userEmail: credentials.email,
       firstName: credentials.firstName,
-      middleName:credentials.middleName,  // You didn't provide a middle name field, so I left it empty
+      middleName: credentials.middleName,
       lastName: credentials.lastName,
       userPassword: credentials.password,
       role: 'admin', // You didn't provide a role field, so I assumed it's 'admin'
@@ -52,9 +52,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">
-      <div className="max-w-md mx-auto bg-white p-4 rounded shadow-md">
-        <h1 className="text-3xl font-bold mb-4">Sign up</h1>
+    <div className="h-screen flex justify-center items-center bg-white">
+      <div className="max-w-md w-full p-4 bg-white rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold mb-4 text-center">Sign up</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-2" htmlFor="firstName">
@@ -66,13 +66,13 @@ const Signup = () => {
               name="firstName"
               value={credentials.firstName}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
           <div className="mb-4">
             <label className="block mb-2" htmlFor="middleName">
-              middle Name
+              Middle Name
             </label>
             <input
               type="text"
@@ -80,7 +80,7 @@ const Signup = () => {
               name="middleName"
               value={credentials.middleName}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
@@ -94,7 +94,7 @@ const Signup = () => {
               name="lastName"
               value={credentials.lastName}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
@@ -108,7 +108,7 @@ const Signup = () => {
               name="email"
               value={credentials.email}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
@@ -122,7 +122,7 @@ const Signup = () => {
               name="password"
               value={credentials.password}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
@@ -136,7 +136,7 @@ const Signup = () => {
               name="confirmPassword"
               value={credentials.confirmPassword}
               onChange={handleInputChange}
-              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded"
+              className="w-full p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200"
               required
             />
           </div>
@@ -145,18 +145,18 @@ const Signup = () => {
           )}
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
             disabled={loading}
           >
             {loading ? 'Signing up...' : 'Sign up'}
           </button>
         </form>
         <p className="text-sm text-gray-600 mt-4">
-          Already have an account? <a href="/login">Login</a>
+          Already have an account? <a href="/login" className="text-blue-500 hover:text-blue-700">Login</a>
         </p>
       </div>
     </div>
   );
 };
 
-export default Signup
+export default Signup;
