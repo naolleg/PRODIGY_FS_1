@@ -7,12 +7,32 @@ function AdminDashboard() {
     fetch('http://localhost:8888/api/user/getAll')
       .then(response => response.json())
       .then(data => setData(data.data));
-       // <--- Update this line
   }, []);
+
+  const handleLogout = () => {
+    // Add your logout logic here, e.g. remove token from local storage
+    localStorage.removeItem('token');
+    // Redirect to login page
+    window.location.href = '/login';
+  };
 
   return (
     <div className="bg-white p-4">
-      <h1 className="text-3xl font-bold mb-4 text-blue-600">Admin Dashboard</h1>
+      <div class="mt-20 ..."></div>
+      <div className="flex justify-between mb-4">
+        <h1 className="text-3xl font-bold text-blue-600">Admin Dashboard</h1>
+        <button
+          className="bg-white hover:bg-white text-red-500 font-bold py-2 px-4 rounded shadow"
+          style={{
+            border: '1px solid red',
+            marginRight: 20,
+            marginTop: 10,
+          }}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="table-auto w-full shadow-md rounded border border-gray-200">
           <thead className="bg-gray-50 text-xs font-semibold uppercase text-gray-800">
@@ -50,24 +70,24 @@ function AdminDashboard() {
                   <div className="text-left">{item.userEmail}</div>
                 </td>
                 <td className="p-2 whitespace-nowrap">
-  <div className="text-center">
-    {item.activeStatus === 1 ? (
-      <button
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow"
-        onClick={() => deactivateUser(item.userId)}
-      >
-        Active
-      </button>
-    ) : (
-      <button
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow"
-        onClick={() => activateUser(item.userId)}
-      >
-        Deactivate
-      </button>
-    )}
-  </div>
-</td>
+                  <div className="text-center">
+                    {item.activeStatus === 1 ? (
+                      <button
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow"
+                        onClick={() => deactivateUser(item.userId)}
+                      >
+                        Active
+                      </button>
+                    ) : (
+                      <button
+                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow"
+                        onClick={() => activateUser(item.userId)}
+                      >
+                        Deactivate
+                      </button>
+                    )}
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>

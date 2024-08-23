@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const NewPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const userId= params.get('id');
+    setUserId(userId);
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -25,13 +33,20 @@ const NewPassword = () => {
       return;
     }
     // Send a request to the server to update the password
-    // For now, let's just simulate a successful response
-    setTimeout(() => {
-      setLoading(false);
-      alert('Password updated successfully!');
-      // Redirect to the login page
-      window.location.href = '/login';
-    }, 2000);
+    axios
+      .post(`http://localhost:8888/api/user/newpassword/${userId}`, {
+        password,
+      })
+      .then((response) => {
+        setLoading(false);
+        alert('Password updated successfully!');
+        // Redirect to the login page
+        window.location.href = '/login';
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError('Error updating password. Please try again.');
+      });
   };
 
   return (
