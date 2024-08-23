@@ -11,6 +11,15 @@ const loginService = {
       return null;
     }
   },
+  getstatus :async(data) => {
+    try {
+      const rows = await query(loginQuery.getUserStatusByUserId, [data.userId]);
+      return rows;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  },
   getUserRole: async (data) => {
     try {
       const rows = await query(loginQuery.getUserRoleByUserId, [data.userId]);

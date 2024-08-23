@@ -34,16 +34,15 @@ const adminService = {
           throw error;
         }
       },
-      deactivateUser: async (data) => {
-        try  {
-          const rows = await query(dashboardQuery.deactivateUser[data.id])
-          return rows
+      deactivateUser: async (userId) => {
+        try {
+          const queryStr = dashboardQuery.deactivateUser;
+          const params = [userId];
+          const rows = await query(queryStr, params);
+          return rows;
         } catch (error) {
-          // console.error('Error deactivating user:', error);
-          // return null;
           console.log(error);
-          // return null;
         }
-      },
+      }
     }
     export default adminService;

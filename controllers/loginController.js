@@ -43,6 +43,7 @@ const loginController = {
         // extracting first name and user role
         const firstname= await loginService.getUserFirstName(req.body);
         const role = await loginService.getUserRole(req.body);
+        const activeStatus=await loginService.getstatus(req.body);
         const userId = req.body.userId;
         // prepare token
       //Prepare token
@@ -56,6 +57,7 @@ const loginController = {
       console.log(token);
 
       return res.status(200).json({
+        activeStatus,
         role,
         token,
         success: true,

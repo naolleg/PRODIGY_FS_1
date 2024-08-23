@@ -8,6 +8,7 @@ import ForgotPassword from "./components/forgotpassword";
  import OTPConfirmation from "./components/otp";
 import NewPassword from "./components/newpassword";
 import HomePage from './components/homePage';
+import AdminDashboard from './components/admindashboard';
 
 function App() {
   return (
@@ -22,8 +23,9 @@ function App() {
           <Route path="/newPassword" element={<NewPassword />} />  
           <Route path="/changePassword" element={<NewPassword />}  />   
          <Route path="/newPassword" element={<NewPassword />}  />
-          <Route path="/admindashboard" element={ 
-            <ProtectedRoute role="admin">  <Admin />   </ProtectedRoute> }/>
+         <Route path="/admindashboard" element={<AdminDashboard/>}  />
+          {/* <Route path="/adminDashboard" element={ 
+            <ProtectedRoute role="admin">  <Admin />   </ProtectedRoute> }/> */}
         </Routes>
       </div>
     </Router>

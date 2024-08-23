@@ -17,20 +17,33 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
-
+  
     const userData = {
       userEmail: credentials.email,
       userPassword: credentials.password,
     };
-
+  
     axios.post('http://localhost:8888/api/user/login', userData)
       .then((response) => {
         console.log(response);
         const token = response.data.token;
-        const userProfile = response.data.user; // assume the API returns the user's profile data
+        const userProfile = response.data; // assume the API returns the user's profile data
         localStorage.setItem('token', token);
         localStorage.setItem('userProfile', JSON.stringify(userProfile));
-        window.location.href = '/';
+  
+        // Check the role and activeStatus, and redirect accordingly
+        const role = userProfile.role[0].role; // access the first element of the role array and then the role property
+        const activeStatus = userProfile.activeStatus[0].activeStatus; // access the first element of the activeStatus array and then the activeStatus property
+  
+        if (role === 'user' && activeStatus === 1) {
+          window.location.href = '/';
+        } else if (role === 'admin' && activeStatus === 1) {
+          window.location.href = '/admindashboard';
+        } else {
+          // Handle unknown role, inactive user, or error
+          console.error('Invalid login credentials or inactive user');
+          setError('Invalid email or password');
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -38,7 +51,6 @@ const Login = () => {
         setLoading(false);
       });
   };
-
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100">
       <div className="max-w-md w-full p-4 bg-white rounded-lg shadow-md">

@@ -5,16 +5,20 @@ dotenv.config();
 const adminController = {
   deactivateUser: async (req, res) => {
     try {
-      const id = req.params.id.substring(1);
+      console.log("bffejnkdwml");
+      
+      const userId = req.params.id;
     //   const { activeStatus } = req.body;
-      if (!id) {
+    console.log(userId);
+    
+      if (!userId) {
         return res.status(400).json({
           success: false,
           message: 'All fields are required',
         });
       }
   
-      const isUserUpdated = await dashboardService.deactivateUser(id);
+      const isUserUpdated = await dashboardService.deactivateUser(userId);
       if (!isUserUpdated) {
         return res.status(400).json({
           success: false,
@@ -67,10 +71,13 @@ const adminController = {
    getalluser:async (req, res) => {
 
     const isAllusers = await dashboardService.getalluser();
+    //console.log(isAllusers);
+    
     if (!isAllusers) {
       return res.status(400).json({
         success: false,
         message: "Failed to get all user",
+        
       });
     }
 
@@ -80,6 +87,7 @@ const adminController = {
     return res.status(200).json({
       success: true,
       message: "User get all successfully",
+      data: isAllusers
     });
 
    },
