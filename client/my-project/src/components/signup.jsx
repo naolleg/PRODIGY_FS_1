@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import FormValidator from '../utilities/formvalidator';
+
 
 const Signup = () => {
   const [credentials, setCredentials] = useState({
@@ -20,6 +22,15 @@ const Signup = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const { firstName, lastName, middleName, email, password, confirmPassword } = credentials;
+    const form = { firstName, lastName, middleName, email, password, confirmPassword };
+    const { success, error: validationError } = FormValidator.signup(form);
+
+    if (!success) {
+      setError(validationError);
+      return;
+    }
+
     setLoading(true);
 
     if (credentials.password !== credentials.confirmPassword) {
