@@ -23,9 +23,10 @@ function App() {
           <Route path="/newPassword" element={<NewPassword />} />  
           <Route path="/changePassword" element={<NewPassword />}  />   
          <Route path="/newPassword" element={<NewPassword />}  />
-         <Route path="/admindashboard" element={<AdminDashboard/>}  />
-          {/* <Route path="/adminDashboard" element={ 
-            <ProtectedRoute role="admin">  <Admin />   </ProtectedRoute> }/> */}
+         <Route path="/admindashboard" element={ 
+     <ProtectedRoute role="admin"> <AdminDashboard />
+     </ProtectedRoute>
+  }/>
         </Routes>
       </div>
     </Router>

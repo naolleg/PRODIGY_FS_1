@@ -204,57 +204,37 @@ const userController = {
     }
   },
   // Change password
-  changePassword: async (req, res) => {
+  newPassword: async (req, res) => {
     try {
       req.body.userId = req.userId;
-      const { userId, oldPassword, userPassword } = req.body;
+      const { userEmail, userPassword } = req.body;
       console.log(userId);
       // Validate the request values
-      if (!userId || !userPassword || !oldPassword) {
+      if (!userEmail || !userPassword ) {
         return res.json({
           success: false,
           message: "All fields are required",
         });
       }
 
-      // Check if the old password is correct
-      const userData = await userService.getUserPasswordByUserId(req.body);
-      console.log(userData);
-      if (!userData) {
+      const isUserExist = await userService.getUserByEmail(req.body);
+      console.log(isUserExist);
+
+      if (!isUserExist) {
         return res.status(500).json({
           success: false,
           message: "User does not exist",
         });
       }
 
-      // Compare the old password with the last one from the table
-      const dbPassword = userData[userData.length - 1].userPassword;
-      console.log(dbPassword);
-      const isMatch = bcrypt.compareSync(oldPassword, dbPassword);
-      if (!isMatch) {
-        return res.status(500).json({
-          success: false,
-          message: "Incorrect old password",
-        });
-      }
-
-      // for (let i = 0; i < userData.length; i++) {
-      //   let dbPassword = userData[i].userPassword;
-      //   // Compare
-      //   const isMatch = bcrypt.compareSync(userPassword, dbPassword);
-      //   if (isMatch) {
-      //     return res.status(500).json({
-      //       success: false,
-      //       message: "This password is already used. Please use another",
-      //     });
-      //   }
-      // }
-
-      // Password encryption
+   // Extract userId
+   req.body.userId = isUserExist[0].userId;
+   console.log(req.body.userId);
+   
       const salt = bcrypt.genSaltSync(10); // Specify the number of rounds
       req.body.userPassword = bcrypt.hashSync(userPassword, salt);
 
-      const insertUserPassword = await userService.insertIntoUsersPassword(
+      const insertUserPassword = await userService.updateUsersPassword(
         userId,
         userPassword
       );
@@ -268,10 +248,10 @@ const userController = {
 
       return res.status(200).json({
         success: true,
-        message: "Password inserted successfully",
+        message: "new Password updated successfully",
       });
     } catch (error) {
-      console.error("Error in changePassword:", error);
+      console.error("Error in newPassword:", error);
       return res.status(500).json({
         success: false,
         message: "Internal server error",

@@ -9,7 +9,7 @@ userRoute.post("/login", loginController.loginUser);
 userRoute.post("/register", userController.registerUser);
 userRoute.post("/confirmOTP", userController.confirmOTP);
 userRoute.put("/forget", userController.forgetPassword);
-//userRoute.put("/newPassword/:id",userController.newPassword);
+userRoute.put("/newPassword/",userController.newPassword);
 userRoute.put("/deactivate/:id",adminController.deactivateUser);
 userRoute.get("/deleteuser", [isAdmin],adminController.deleteUser);
 userRoute.get("/getAll", adminController.getalluser);
