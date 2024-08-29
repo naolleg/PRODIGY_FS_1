@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const NewPassword = () => {
@@ -7,6 +8,9 @@ const NewPassword = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const email = location.state?.email;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -23,30 +27,34 @@ const NewPassword = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     setLoading(true);
     // Check if the passwords match
-    if (password !== confirmPassword) {
+    if (!email || !password || !confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);
       return;
     }
+    if (Password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
     // Send a request to the server to update the password
-    axios
-      .post(`http://localhost:8888/api/user/newpassword/${userId}`, {
-        password,
-      })
-      .then((response) => {
-        setLoading(false);
-        alert('Password updated successfully!');
-        // Redirect to the login page
-        window.location.href = '/login';
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError('Error updating password. Please try again.');
+    try {
+      const response = await axios.put(`http://localhost:8888/api/user/newpassword`, {
+        email,
+        newpassword: newPassword,
       });
+      if (response.status === 200) {
+        navigate("/"); // Redirect to login page
+      } else {
+        setError(response.data.message || "Error updating password");
+      }
+    } catch (err) {
+      console.error("An error occurred during password update:", err);
+      setError("An error occurred. Please try again later.");
+    }
   };
 
   return (

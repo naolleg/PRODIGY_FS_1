@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const OTPConfirmation = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email; 
 
   const handleInputChange = (index) => (event) => {
     const { value } = event.target;
@@ -18,22 +23,25 @@ const OTPConfirmation = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    // Verify the OTP with the server
-    // For now, let's just simulate a successful response
-    setTimeout(() => {
-      setLoading(false);
-      if (otp.join('') === '123456') { // Replace with the actual OTP sent to the user
+    try {
+      const response = await axios.post('http://localhost:8888/api/user/confirmOTP', { email, otp: otp.join('') });
+      if (response.data.success) {
         alert('OTP verified successfully!');
         // Redirect to the new password page
-        window.location.href = '/newpassword';
+        navigate('/newpassword', { state: { email, otp: otp.join('') } });
       } else {
-        setError('Invalid OTP');
+        setError(response.data.message);
       }
-    }, 2000);
+    } catch (error) {
+      setError('An error occurred while verifying the OTP.');
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <div className="h-screen flex justify-center items-center" style={{ backgroundColor: '#fff' }}>
@@ -77,7 +85,7 @@ const OTPConfirmation = () => {
           </button>
         </form>
         <p className="text-sm text-gray-600 mt-4 text-center">
-          Didn't receive the OTP? <a href="/resend-otp" className="text-blue-500 hover:text-blue-700">Resend OTP</a>
+          Didn't receive the OTP? <a href="/forgetPassword" className="text-blue-500 hover:text-blue-700">Resend OTP</a>
         </p>
       </div>
     </div>

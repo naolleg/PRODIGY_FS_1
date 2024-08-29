@@ -8,8 +8,7 @@ const userUtility = {
     return Math.floor(Math.random() * 900000 + 100000);
   },
 
-  async sendEmail(userEmail) {
-    const otp = this.generateDigitOTP();
+  async sendEmail(userEmail, otp) {
     console.log('Preparing to send email to:', userEmail);
     try {
       const transporter = nodemailer.createTransport({

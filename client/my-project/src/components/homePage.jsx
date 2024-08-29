@@ -5,7 +5,7 @@ const HomePage = () => {
     // Add your logout logic here, e.g. remove token from local storage
     localStorage.removeItem('token');
     // Redirect to login page
-    window.location.href = '/login';
+    window.location.href = '/';
   };
 
   return (

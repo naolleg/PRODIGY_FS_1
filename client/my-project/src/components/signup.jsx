@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FormValidator from '../utilities/formvalidator';
-
 
 const Signup = () => {
   const [credentials, setCredentials] = useState({
@@ -22,15 +20,6 @@ const Signup = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { firstName, lastName, middleName, email, password, confirmPassword } = credentials;
-    const form = { firstName, lastName, middleName, email, password, confirmPassword };
-    const { success, error: validationError } = FormValidator.signup(form);
-
-    if (!success) {
-      setError(validationError);
-      return;
-    }
-
     setLoading(true);
 
     if (credentials.password !== credentials.confirmPassword) {
@@ -53,7 +42,7 @@ const Signup = () => {
         console.log(response);
         alert('User created successfully!');
         // Redirect to the login page
-        window.location.href = '/login';
+        window.location.href = '/';
       })
       .catch((error) => {
         console.error(error);

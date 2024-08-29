@@ -135,17 +135,20 @@ const userService = {
 
   newOTP: async (data) => {
     try {
-      const rows = query(userQuery.newOTP, [data.userId, data.OTP]);
+      const { userId, OTP } = data;
+      console.log(userId);
+      console.log(OTP);
+      
+      const rows = query(userQuery.newOTP, [userId, OTP]);
       return rows;
     } catch (error) {
       console.log("Error updating user's OTP:", error);
     }
   },
-
   // insertUserPassword: async (data) => {
   //   try {
   //     const rows = query(
-  //       userQuery.insertUserPassword[(data.userId, data.userPassword)]
+  //       userQueryu.insertUserPassword[(data.userId, data.userPassword)]
   //     );
   //     return rows;
   //   } catch (error) {

@@ -117,29 +117,14 @@ const userController = {
         const storedOTP = getOTP[0].OTP;
         if (OTP === storedOTP) {
           // Correct OTP, perform any necessary actions
-          // Update user's OTP to null
-          const updatedOTP = await userService.updateOTP(req.body);
-          console.log(req.body);
-          console.log(updatedOTP);
+          return res.json({
+            success: true,
+            message: "OTP successfully confirmed",
+          });
 
-          if (!updatedOTP) {
-            return res.status(500).json({
-              success: false,
-              message: "Error updating user's OTP",
-            });
-          }
-
+         
           // Update contact verification table column emailStatus to 1
-          const updatedEmailStatus =
-            await userService.updateContactVerificationEmailStatus(req.body);
-
-          if (!updatedEmailStatus) {
-            return res.status(500).json({
-              success: false,
-              message:
-                "Error updating email status in contact verification table",
-            });
-          }
+          
         } else {
           return res.status(500).json({
             success: false,
@@ -147,10 +132,7 @@ const userController = {
           });
         }
 
-        return res.json({
-          success: true,
-          message: "OTP successfully confirmed",
-        });
+       
       }
     } catch (error) {
       console.error("Error in confirmOTP:", error);
@@ -176,7 +158,8 @@ const userController = {
   
       // Check if the email exists
       const isUserExist = await userService.getUserByEmail(req.body);
-  
+     console.log(isUserExist);
+     
       // If there is no account related to this email
       if (!isUserExist.length) {
         return res.status(400).json({
@@ -186,17 +169,19 @@ const userController = {
       } else {
         // Extract userId
         req.body.userId = isUserExist[0].userId;
+        console.log(req.body.userId);
+        
         // Generate OTP
-        console.log("0");
         const OTP = await userUtility.generateDigitOTP();
         req.body.OTP = OTP;
-        console.log("1");
-        
+     console.log(req.body.OTP);
+     
         // Send OTP to user's email
         userUtility.sendEmail(userEmail, OTP).then(async () => {
           // Store OTP in database
-          console.log("2");
-          const isnewOTPAdded = await userService.newOTP(req.body);
+          const isnewOTPAdded = await userService.newOTP({ userId: req.body.userId, OTP: req.body.OTP });
+          console.log(isnewOTPAdded);
+          
           if (!isnewOTPAdded) {
             return res.status(500).json({
               success: false,
@@ -212,49 +197,6 @@ const userController = {
       }
     } catch (error) {
       console.error("Error in forgetPassword:", error);
-      return res.status(500).json({
-        success: false,
-        message: "Internal server error",
-      });
-    }
-  },
-  // Change new password
-  newPassword: async (req, res) => {
-    try {
-      const userId = req.params.id;
-      const { newPassword } = req.body;
-      console.log(userId);
-  
-      // Validate the request values
-      if (!userId || !newPassword) {
-        return res.json({
-          success: false,
-          message: "All fields are required",
-        });
-      }
-  console.log(newPassword);
-  
-      // Password encryption
-      let salt = bcrypt.genSaltSync(10); // Specify the number of rounds
-      const encryptedPassword = bcrypt.hashSync(newPassword, salt);
-  console.log(encryptedPassword);
-  
-  const passwordInserted = await userService.updateUsersPassword(
-    userId,
-    encryptedPassword
-  );
-      if (!passwordInserted) {
-        return res.status(404).json({
-          success: false,
-          message: "password not insert into userPassword",
-        });
-      }
-      return res.status(200).json({
-        success: true,
-        message: "Password changed successfully",
-      });
-    } catch (error) {
-      console.error("Error in newPassword:", error);
       return res.status(500).json({
         success: false,
         message: "Internal server error",

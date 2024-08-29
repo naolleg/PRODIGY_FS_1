@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FormValidator from '../utilities/formvalidator';
-
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -18,14 +16,6 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const { email, password } = credentials;
-    const form = { email, password };
-    const { success, error: validationError } = FormValidator.login(form);
-
-    if (!success) {
-      setError(validationError);
-      return;
-    }
     setLoading(true);
   
     const userData = {
@@ -46,7 +36,7 @@ const Login = () => {
         const activeStatus = userProfile.activeStatus[0].activeStatus; // access the first element of the activeStatus array and then the activeStatus property
   
         if (role === 'user' && activeStatus === 1) {
-          window.location.href = '/';
+          window.location.href = '/home';
         } else if (role === 'admin' && activeStatus === 1) {
           window.location.href = '/admindashboard';
         } else {
